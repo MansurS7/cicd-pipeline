@@ -32,5 +32,7 @@ pipeline {
   }
   environment {
     DOCKER_IMAGE = 'mansur777/test-jenkins-pipeline'
+    DOCKER_USERNAME = 'Mansur777'
+    DOCKER_PASSWORD = 'Crash20master20'
   }
 }
