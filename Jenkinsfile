@@ -24,13 +24,13 @@ pipeline {
     stage('Docker image push') {
       steps {
         sh 'docker login'
-        sh 'docker tag myimagetest:latest mansur777/myimagetest:latest'
-        sh 'docker push mansur777/myimagetest:latest'
+        sh 'docker tag myimagetest:latest mansur777/test-jenkins-pipeline:latest'
+        sh 'docker push mansur777/test-jenkins-pipeline:latest'
       }
     }
 
   }
   environment {
-    DOCKER_IMAGE = 'mansur777/myimagetest'
+    DOCKER_IMAGE = 'mansur777/test-jenkins-pipeline'
   }
 }
