@@ -23,7 +23,7 @@ pipeline {
 
     stage('Docker image push') {
       steps {
-        sh 'docker login'
+        sh 'echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin'
         sh 'docker tag myimagetest:latest mansur777/test-jenkins-pipeline:latest'
         sh 'docker push mansur777/test-jenkins-pipeline:latest'
       }
