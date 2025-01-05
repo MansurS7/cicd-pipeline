@@ -24,14 +24,19 @@ pipeline {
     stage('Docker image push') {
       steps {
         sh 'echo "DOCKER_USERNAME: $DOCKER_USERNAME"; echo "DOCKER_PASSWORD: $DOCKER_PASSWORD"'
-        sh 'echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin'
-        sh 'docker tag myimagetest:latest mansur777/myimagetest:latest'
-        sh 'docker push mansur777/myimagetest:latest'
-      }
-    }
-
-  }
-  environment {
-    DOCKER_IMAGE = 'mansur777/test-jenkins-pipeline'
-  }
+        sh '''withCredentials([usernamePassword(credentialsId: \'docker-hub-credentials\', usernameVariable: \'DOCKER_USERNAME\', passwordVariable: \'DOCKER_PASSWORD\')]) {
+    sh \'\'\'
+        echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+    \'\'\'
 }
+'''
+          sh 'docker tag myimagetest:latest mansur777/myimagetest:latest'
+          sh 'docker push mansur777/myimagetest:latest'
+        }
+      }
+
+    }
+    environment {
+      DOCKER_IMAGE = 'mansur777/test-jenkins-pipeline'
+    }
+  }
